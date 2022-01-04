@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema(
         pseudo: {
             type: String,
             required: true,
-            minLength: 3,
-            maxLength: 55,
+            minlength: 3,
+            maxlength: 55,
             unique: true,
             trim: true,
         },
@@ -49,13 +49,14 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-// presave function : bcrypt password before storing
+// Presave function : hash password before storing
 userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
 
+// Check if password is valid when login
 userSchema.statics.login = async function (email, password) {
     const user = await this.findOne({ email });
     if (user) {
