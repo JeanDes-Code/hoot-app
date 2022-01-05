@@ -18,7 +18,7 @@ router.delete('/:id', userController.deleteUser);
 router.patch('/follow/:id', userController.follow);
 router.patch('/unfollow/:id', userController.unfollow);
 
-//upload files
-router.post('/upload', uploadController.uploadProfile);
+// upload
+router.post('/upload', upload.single('file'), uploadController.uploadProfile);
 
 module.exports = router;
