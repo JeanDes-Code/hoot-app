@@ -3,30 +3,31 @@ import Routes from './components/Routes';
 import { UidContext } from './components/AppContext';
 import axios from 'axios';
 
-
-const  App = () => {
-    const [uid, setUid] = useState(null)
+const App = () => {
+    const [uid, setUid] = useState(null);
 
     useEffect(() => {
         const fetchToken = async () => {
             await axios({
                 method: 'get',
-                url:`${process.env.REACT_APP_API_URL}jwtid`,
+                url: `${process.env.REACT_APP_API_URL}jwtid`,
                 withCredentials: true,
             })
-            .then((res) => {
-                setUid(res.data)
-            })
-            .catch((err) => console.log("User is not connected (no Token found)"))
+                .then((res) => {
+                    setUid(res.data);
+                })
+                .catch((err) =>
+                    console.log('User is not connected (no Token found)')
+                );
         };
         fetchToken();
-    }, [uid])
+    }, [uid]);
 
     return (
         <UidContext.Provider value={uid}>
             <Routes />
         </UidContext.Provider>
     );
-}
+};
 
 export default App;
