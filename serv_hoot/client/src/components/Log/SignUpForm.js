@@ -136,7 +136,7 @@ const SignUpForm = () => {
                     <div className="terms error"></div>
                     <br />
 
-                    <input type="submit" value="Valider inscription" />
+                    <input type="submit" value="S'inscrire" />
                 </form>
             )}
         </>
