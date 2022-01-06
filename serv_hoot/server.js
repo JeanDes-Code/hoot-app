@@ -16,7 +16,7 @@ require('./config/db');
 const app = express();
 
 const corsOptions = {
-    origin: process.env.CLIENT_URL,
+    origin: ENV.CLIENT_URL,
     credentials: true,
     allowedHeaders: ['sessionId', 'Content-Type'],
     exposedHeaders: ['sessionId'],
