@@ -28,6 +28,7 @@ const App = () => {
         if (uid) {
             dispatch(getUser(uid));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uid]);
 
     return (
