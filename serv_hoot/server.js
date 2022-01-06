@@ -2,12 +2,13 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
-const { checkUser, requireAuth } = require('./middleware/auth.middleware');
-const cors = require('cors');
-
 //DOTENV CONFIG
 require('dotenv').config({ path: './config/.env' });
 const ENV = process.env;
+
+const { checkUser, requireAuth } = require('./middleware/auth.middleware');
+const cors = require('cors');
+
 
 //CONNECT DB
 require('./config/db');
@@ -16,12 +17,12 @@ require('./config/db');
 const app = express();
 
 const corsOptions = {
-    origin: ENV.CLIENT_URL,
+    origin: "http://localhost:3000",
     credentials: true,
-    allowedHeaders: ['sessionId', 'Content-Type'],
-    exposedHeaders: ['sessionId'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
+    'allowedHeaders': ['sessionId', 'Content-Type'],
+    'exposedHeaders': ['sessionId'],
+    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    'preflightContinue': false,
 };
 app.use(cors(corsOptions));
 
