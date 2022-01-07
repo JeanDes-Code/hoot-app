@@ -2,10 +2,10 @@
 import { updateBio } from 'actions/user.actions';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import LeftNav from './../LeftNav';
+import LeftNav from '../LeftNav';
 import UploadImg from './UploadImg';
-import { dateParser } from './../Utils';
-import FollowHandler from './../FollowHandler';
+import { dateParser } from '../Utils';
+import FollowHandler from '../FollowHandler';
 
 const UpdateProfil = () => {
     // @ts-ignore
@@ -111,6 +111,7 @@ const UpdateProfil = () => {
                                                 <div className="follow-handler">
                                                     <FollowHandler
                                                         idToFollow={user._id}
+                                                        type={'suggestion'}
                                                     />
                                                 </div>
                                             </li>
@@ -151,6 +152,7 @@ const UpdateProfil = () => {
                                                 <div className="follow-handler">
                                                     <FollowHandler
                                                         idToFollow={user._id}
+                                                        type={'suggestion'}
                                                     />
                                                 </div>
                                             </li>
