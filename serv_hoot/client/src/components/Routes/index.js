@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Redirect,
+    Route,
+    Switch,
+} from 'react-router-dom';
 import Home from '../../pages/Home';
 import Profil from '../../pages/Profil';
 import Trending from '../../pages/Trending';
@@ -9,12 +14,12 @@ const index = () => {
     return (
         <Router>
             <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/profil" element={<Profil />} />
-                <Route path="/trending" element={<Trending />} />
-                <Route path="*" element={<Home />} />
-            </Routes>
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/profil" exact component={Profil} />
+                <Route path="/trending" exact component={Trending} />
+                <Redirect to="/" />
+            </Switch>
         </Router>
     );
 };
