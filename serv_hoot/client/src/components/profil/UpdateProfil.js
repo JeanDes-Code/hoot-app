@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import { updateBio } from 'actions/user.actions';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -118,6 +117,7 @@ const UpdateProfil = () => {
                                         );
                                     }
                                 }
+                                return null;
                             })}
                         </ul>
                     </div>
@@ -159,6 +159,7 @@ const UpdateProfil = () => {
                                         );
                                     }
                                 }
+                                return null;
                             })}
                         </ul>
                     </div>

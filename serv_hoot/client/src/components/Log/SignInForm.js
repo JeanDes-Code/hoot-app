@@ -40,6 +40,7 @@ const SignInForm = () => {
                 type="text"
                 name="email"
                 id="email"
+                autoComplete="username"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
             />
@@ -52,6 +53,7 @@ const SignInForm = () => {
                 type="password"
                 name="password"
                 id="password"
+                autoComplete="current-password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
             />

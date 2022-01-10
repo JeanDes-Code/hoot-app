@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { createPortal } from 'react-dom';
 import SignInForm from './SignInForm';
 
 const SignUpForm = () => {
@@ -9,7 +8,6 @@ const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [controlPassword, setControlPassword] = useState('');
-    const terms = document.getElementById('terms');
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -25,11 +23,13 @@ const SignUpForm = () => {
         passwordConfirmError.innerHTML = '';
         termsError.innerHTML = '';
 
+        // @ts-ignore
         if (password !== controlPassword || !terms.checked) {
             if (password !== controlPassword) {
                 passwordConfirmError.innerHTML =
                     'Les mots de passe ne correspondent pas';
             }
+            // @ts-ignore
             if (!terms.checked) {
                 termsError.innerHTML = 'Veuillez vendre votre âme.';
             }
@@ -89,6 +89,7 @@ const SignUpForm = () => {
                         type="text"
                         name="email"
                         id="email"
+                        autoComplete="username"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -101,6 +102,7 @@ const SignUpForm = () => {
                     <input
                         type="password"
                         name="password"
+                        autoComplete="new-password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -117,6 +119,7 @@ const SignUpForm = () => {
                     <input
                         type="password"
                         name="password"
+                        autoComplete="new-password"
                         id="password-conf"
                         value={controlPassword}
                         onChange={(e) => setControlPassword(e.target.value)}

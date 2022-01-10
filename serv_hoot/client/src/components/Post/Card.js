@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import FollowHandler from 'components/FollowHandler';
 import { isEmpty } from 'components/Utils';
 import React, { useEffect, useState } from 'react';
@@ -31,6 +30,7 @@ const Card = ({ post }) => {
                                     .map((user) => {
                                         if (user._id === post.posterId)
                                             return user.picture;
+                                        else return null;
                                     })
                                     .join('')
                             }
@@ -45,6 +45,7 @@ const Card = ({ post }) => {
                                         usersData.map((user) => {
                                             if (user._id === post.posterId)
                                                 return user.pseudo;
+                                            else return null;
                                         })}
                                 </h3>
                                 {post.posterId !== userData._id && (
