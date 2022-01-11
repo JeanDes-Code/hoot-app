@@ -5,7 +5,9 @@ import { deletePost } from 'actions/post.actions';
 const Deletecard = (props) => {
     const dispatch = useDispatch();
 
-    const deleteQuote = () => dispatch(deletePost(props.id));
+    const deleteQuote = async () => {
+        await dispatch(deletePost(props.id));
+    };
 
     return (
         <div
