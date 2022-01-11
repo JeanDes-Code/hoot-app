@@ -12,6 +12,8 @@ const NewPostForm = () => {
     const [file, setFile] = useState();
     // @ts-ignore
     const userData = useSelector((state) => state.userReducer);
+    // @ts-ignore
+    const error = useSelector((state) => state.errorReducer.postError);
     const textareaPlaceholder = `Quoi de neuf ${userData.pseudo} ?`;
     const dispatch = useDispatch();
 
@@ -30,6 +32,7 @@ const NewPostForm = () => {
         } else {
             alert('Veuillez entrer un message.');
         }
+        console.log(error);
     };
 
     const handlePicture = (e) => {
@@ -46,29 +49,30 @@ const NewPostForm = () => {
         setFile('');
     };
 
-    const handleVideo = () => {
-        let findLink = message.split(' ');
-        for (let i = 0; i < findLink.length; i++) {
-            if (findLink[i].includes('https://www.yout' || 'https://yout')) {
-                let embed = findLink[i].replace('watch?v=', 'embed/');
-                setVideo(embed.split('&')[0]);
-                findLink.splice(i, 1);
-                setMessage(findLink.join(' '));
-                setPostPicture('');
-            }
-            //handle "youtu.be" links
-            if (findLink[i] && findLink[i].includes('.be')) {
-                let videoId = findLink[i].split('be/')[1];
-                let embed = `https://www.youtube.com/embed/${videoId}`;
-                setVideo(embed);
-                findLink.splice(i, 1);
-                setMessage(findLink.join(' '));
-                setPostPicture('');
-            }
-        }
-    };
-
     useEffect(() => {
+        const handleVideo = () => {
+            let findLink = message.split(' ');
+            for (let i = 0; i < findLink.length; i++) {
+                if (
+                    findLink[i].includes('https://www.yout' || 'https://yout')
+                ) {
+                    let embed = findLink[i].replace('watch?v=', 'embed/');
+                    setVideo(embed.split('&')[0]);
+                    findLink.splice(i, 1);
+                    setMessage(findLink.join(' '));
+                    setPostPicture('');
+                }
+                //handle "youtu.be" links
+                if (findLink[i] && findLink[i].includes('.be')) {
+                    let videoId = findLink[i].split('be/')[1];
+                    let embed = `https://www.youtube.com/embed/${videoId}`;
+                    setVideo(embed);
+                    findLink.splice(i, 1);
+                    setMessage(findLink.join(' '));
+                    setPostPicture('');
+                }
+            }
+        };
         if (!isEmpty(userData)) {
             setIsLoading(false);
         }
@@ -181,6 +185,9 @@ const NewPostForm = () => {
                                     </button>
                                 )}
                             </div>
+                            {!isEmpty(error.format) && <p>{error.format}</p>}
+                            {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
+
                             <div className="btn-send">
                                 {message || postPicture || video.length > 20 ? (
                                     <button
