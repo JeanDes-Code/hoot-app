@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { isEmpty, timeStampParser } from 'components/Utils';
 import { useSelector, useDispatch } from 'react-redux';
 import FollowHandler from 'components/FollowHandler';
+import { addComment, getPosts } from 'actions/post.actions';
+import EditDeleteComment from './EditDeleteComment';
 
 const CardComments = ({ post }) => {
     const [text, setText] = useState('');
@@ -11,7 +13,16 @@ const CardComments = ({ post }) => {
     const userData = useSelector((state) => state.userReducer);
     const dispatch = useDispatch();
 
-    const handleComment = () => {};
+    const handleComment = (e) => {
+        e.preventDefault();
+
+        if (text) {
+            dispatch(addComment(post._id, userData._id, text, userData.pseudo))
+                // @ts-ignore
+                .then(() => dispatch(getPosts()))
+                .then(() => setText(''));
+        }
+    };
 
     return (
         <div className="comments-container">
@@ -58,6 +69,10 @@ const CardComments = ({ post }) => {
                                 </span>
                             </div>
                             <p>{comment.text}</p>
+                            <EditDeleteComment
+                                comment={comment}
+                                postId={post._id}
+                            />
                         </div>
                     </div>
                 );
