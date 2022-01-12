@@ -5,6 +5,7 @@ import { isEmpty } from 'components/Utils';
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import Card from './../components/Post/Card';
+import FriendsHint from './../components/Profil/FriendsHint';
 
 const Trending = () => {
     const uid = useContext(UidContext);
@@ -25,6 +26,7 @@ const Trending = () => {
             <div className="right-side">
                 <div className="right-side-container">
                     <Trends />
+                    {uid && <FriendsHint />}
                 </div>
             </div>
         </div>
