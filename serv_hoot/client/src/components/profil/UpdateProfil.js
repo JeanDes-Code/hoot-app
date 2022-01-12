@@ -58,7 +58,6 @@ const UpdateProfil = () => {
                                 <textarea
                                     defaultValue={userData.bio}
                                     onChange={(e) => {
-                                        console.log(e.target.value);
                                         setBio(e.target.value);
                                     }}
                                 ></textarea>

@@ -11,7 +11,6 @@ const FriendsHint = () => {
     const userData = useSelector((state) => state.userReducer);
     // @ts-ignore
     const usersData = useSelector((state) => state.usersReducer);
-    console.log(window.innerHeight > 615);
 
     useEffect(() => {
         const notFriendList = () => {
