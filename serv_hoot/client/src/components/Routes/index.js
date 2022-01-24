@@ -9,6 +9,7 @@ import Home from '../../pages/Home';
 import Profil from '../../pages/Profil';
 import Trending from '../../pages/Trending';
 import Navbar from '../Navbar';
+import Feedback from './../../pages/Feedback';
 
 const index = () => {
     return (
@@ -18,6 +19,7 @@ const index = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/profil" exact component={Profil} />
                 <Route path="/trending" exact component={Trending} />
+                <Route path="/feedback" exact component={Feedback} />
                 <Redirect to="/" />
             </Switch>
         </Router>

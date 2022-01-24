@@ -28,6 +28,16 @@ const LeftNav = () => {
                     >
                         <img src="./img/icons/user.svg" alt="to-profil-page" />
                     </NavLink>
+                    <NavLink
+                        to="/feedback"
+                        exact
+                        activeClassName="active-left-nav"
+                    >
+                        <img
+                            src="./img/icons/feedback.svg"
+                            alt="to-feedback-page"
+                        />
+                    </NavLink>
                 </div>
             </div>
         </div>
