@@ -6,6 +6,7 @@ import NewPostForm from './../components/Post/NewPostForm';
 import Log from './../components/Log';
 import Trends from 'components/Trends';
 import FriendsHint from './../components/Profil/FriendsHint';
+import ScrollTop from 'react-scrolltop-button';
 
 const Home = () => {
     const uid = useContext(UidContext);
@@ -22,6 +23,19 @@ const Home = () => {
                     )}
                 </div>
                 <Thread />
+                <ScrollTop
+                    text="Haut de page"
+                    distance={50}
+                    breakpoint={3000}
+                    style={{
+                        backgroundColor: '#ff7b77',
+                        color: 'white',
+                        border: 'none',
+                    }}
+                    className="scroll-your-role"
+                    speed={1000}
+                    target={75}
+                />
             </div>
             <div className="right-side">
                 <div className="right-side-container">

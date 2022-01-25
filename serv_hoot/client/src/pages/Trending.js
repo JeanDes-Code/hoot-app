@@ -6,6 +6,7 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import Card from './../components/Post/Card';
 import FriendsHint from './../components/Profil/FriendsHint';
+import ScrollTop from 'react-scrolltop-button';
 
 const Trending = () => {
     const uid = useContext(UidContext);
@@ -22,6 +23,19 @@ const Trending = () => {
                             <Card post={post} key={post._id} />
                         ))}
                 </ul>
+                <ScrollTop
+                    text="Haut de page"
+                    distance={50}
+                    breakpoint={3000}
+                    style={{
+                        backgroundColor: '#ff7b77',
+                        color: 'white',
+                        border: 'none',
+                    }}
+                    className="scroll-your-role"
+                    speed={1000}
+                    target={75}
+                />
             </div>
             <div className="right-side">
                 <div className="right-side-container">
