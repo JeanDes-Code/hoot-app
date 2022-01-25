@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { UidContext } from './AppContext';
 
 const LeftNav = () => {
+    const uid = useContext(UidContext);
+
     return (
         <div className="left-nav-container">
             <div className="icons">
@@ -28,16 +31,18 @@ const LeftNav = () => {
                     >
                         <img src="./img/icons/user.svg" alt="to-profil-page" />
                     </NavLink>
-                    <NavLink
-                        to="/feedback"
-                        exact
-                        activeClassName="active-left-nav"
-                    >
-                        <img
-                            src="./img/icons/feedback.svg"
-                            alt="to-feedback-page"
-                        />
-                    </NavLink>
+                    {uid ? (
+                        <NavLink
+                            to="/feedback"
+                            exact
+                            activeClassName="active-left-nav"
+                        >
+                            <img
+                                src="./img/icons/feedback.svg"
+                                alt="to-feedback-page"
+                            />
+                        </NavLink>
+                    ) : null}
                 </div>
             </div>
         </div>
