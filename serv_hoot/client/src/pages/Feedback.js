@@ -68,7 +68,6 @@ const Feedback = () => {
                                 {' '}
                                 Votre adresse email : {userData.email}{' '}
                             </label>
-                            <br />
                             <input
                                 type="email"
                                 hidden

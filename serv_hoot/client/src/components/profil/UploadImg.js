@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { uploadPicture } from 'actions/user.actions';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
