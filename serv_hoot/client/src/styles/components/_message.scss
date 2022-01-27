@@ -16,6 +16,8 @@
         padding: 10px;
         border-radius: 20px;
         background-color: $color-2;
+        max-width: 300px;
+        overflow-wrap: break-word;
         color: white;
         max-width: 300px;
     }
