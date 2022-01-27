@@ -74,6 +74,12 @@ const Messenger = () => {
         }
     };
 
+    const handleSubmitOnEnter = (e) => {
+        if (e.keyCode === 13) {
+            handleSubmit(e);
+        } else return;
+    };
+
     return (
         <div className="messenger">
             <LeftNav />
@@ -115,6 +121,9 @@ const Messenger = () => {
                                         placeholder="Ecrire un message ..."
                                         onChange={(e) =>
                                             setNewMessage(e.target.value)
+                                        }
+                                        onKeyDown={(e) =>
+                                            handleSubmitOnEnter(e)
                                         }
                                         value={newMessage}
                                     ></textarea>

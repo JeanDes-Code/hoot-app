@@ -15,7 +15,7 @@
     &-text {
         padding: 10px;
         border-radius: 20px;
-        background-color: $color-1;
+        background-color: $color-2;
         color: white;
         max-width: 300px;
     }
@@ -26,7 +26,7 @@
     &.own {
         align-items: flex-end;
         .message-text {
-            background-color: $color-2;
+            background-color: $color-1;
             color: black;
         }
     }
