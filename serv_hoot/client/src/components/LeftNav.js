@@ -24,6 +24,22 @@ const LeftNav = () => {
                         />
                     </NavLink>
                     <br />
+                    {uid ? (
+                        <>
+                            <NavLink
+                                to="/messenger"
+                                exact
+                                activeClassName="active-left-nav"
+                            >
+                                <img
+                                    src="./img/icons/messenger.svg"
+                                    alt="to-trending-page"
+                                />
+                            </NavLink>
+                            <br />
+                        </>
+                    ) : null}
+
                     <NavLink
                         to="/profil"
                         exact

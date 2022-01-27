@@ -1,0 +1,91 @@
+.messenger {
+    display: grid;
+    max-width: 1200px;
+    grid-template-columns: 60px 1fr /*374px*/;
+    overflow: hidden;
+    margin: 58px auto 50px;
+    position: relative;
+
+    @media screen and(max-width: 990px) {
+        grid-template-columns: 60px 1fr;
+        margin: 58px 20px 50px;
+    }
+
+    @media screen and(max-width: 590px) {
+        grid-template-columns: 1fr;
+        margin: 58px 8px 50px;
+    }
+
+    .main {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        @media screen and(max-width: 590px) {
+            margin-left: 30px;
+        }
+        .chat-menu {
+            flex: 3.5;
+            &-wrapper {
+                padding: 10px;
+                height: 100%;
+            }
+            &-input {
+                width: 90%;
+                padding: 10px 0 10px 10px;
+                border: none;
+                border-radius: 0;
+                border-bottom: 1px solid $color-1;
+            }
+        }
+        .chat-box {
+            flex: 5;
+            &-wrapper {
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            &-top {
+                height: 50vh;
+                overflow-y: scroll;
+                padding-right: 10px;
+                &::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                    background-color: $white;
+                }
+
+                &::-webkit-scrollbar {
+                    width: 10px;
+                    background-color: $light-gray;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: $color-2;
+                }
+            }
+            &-bottom {
+                margin-top: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .chat-message {
+                    &-input {
+                        height: 62px;
+                        font-size: 1.4rem;
+                        padding: 12px 15px;
+                        border-radius: 20px 20px 6px 20px;
+                    }
+                }
+            }
+        }
+
+        .chat-online {
+            flex: 3.5;
+            &-wrapper {
+                padding: 10px;
+                height: 100%;
+            }
+        }
+    }
+}

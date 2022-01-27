@@ -10,6 +10,7 @@ import Profil from '../../pages/Profil';
 import Trending from '../../pages/Trending';
 import Navbar from '../Navbar';
 import Feedback from './../../pages/Feedback';
+import Messenger from './../../pages/Messenger';
 
 const index = () => {
     return (
@@ -20,6 +21,7 @@ const index = () => {
                 <Route path="/profil" exact component={Profil} />
                 <Route path="/trending" exact component={Trending} />
                 <Route path="/feedback" exact component={Feedback} />
+                <Route path="/messenger" exact component={Messenger} />
                 <Redirect to="/" />
             </Switch>
         </Router>
