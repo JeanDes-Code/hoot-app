@@ -10,7 +10,6 @@ import ScrollTop from 'react-scrolltop-button';
 
 const Home = () => {
     const uid = useContext(UidContext);
-
     return (
         <div className="home">
             <LeftNav />
