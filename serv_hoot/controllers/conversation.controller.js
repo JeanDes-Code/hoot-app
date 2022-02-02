@@ -22,3 +22,14 @@ module.exports.readConversation = async (req, res) => {
         res.status(500).json(err)
     }
 }
+
+module.exports.findConversation = async (req, res) => {
+    try {
+        const conversation = await ConversationModel.findOne({
+            members: { $in:[req.params.firstUserId, req.params.secondUserId] }
+        })
+        res.status(200).json(conversation);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+}

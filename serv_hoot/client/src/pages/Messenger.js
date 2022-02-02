@@ -7,9 +7,12 @@ import Message from './../components/Message/Message';
 import { UidContext } from 'components/AppContext';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import { useSelector } from 'react-redux';
 
 const Messenger = () => {
     const uid = useContext(UidContext);
+    // @ts-ignore
+    const userData = useSelector((state) => state.userReducer);
     const [conversations, setConversations] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -42,8 +45,12 @@ const Messenger = () => {
         // @ts-ignore
         socket.current.emit('addUser', uid);
         // @ts-ignore
-        socket.current.on('getUsers', (users) => {
-            setOnlineUsers(users);
+        socket.current.on('getUsers', (usersOnline) => {
+            setOnlineUsers(
+                userData.following.filter((friend) =>
+                    usersOnline.some((user) => user.userId === friend)
+                )
+            );
         });
     }, [uid]);
 
