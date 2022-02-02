@@ -26,7 +26,7 @@ module.exports.readConversation = async (req, res) => {
 module.exports.findConversation = async (req, res) => {
     try {
         const conversation = await ConversationModel.findOne({
-            members: { $in:[req.params.firstUserId, req.params.secondUserId] }
+            members: { $all:[req.params.firstUserId, req.params.secondUserId] }
         })
         res.status(200).json(conversation);
     } catch (err) {

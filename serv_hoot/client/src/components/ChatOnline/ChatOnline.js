@@ -22,11 +22,20 @@ const ChatOnline = ({ onlineUsers, setCurrentChat }) => {
         setOnlineFriends(onlineUsers);
     }, [friends, onlineUsers]);
 
-    const handleClick = async (user) => {
+    const handleClick = async (onlineFriend) => {
         try {
             const res = await axios.get(
-                `${process.env.REACT_APP_API_URL}api/conversation/find/${uid}/${user}`
+                `${process.env.REACT_APP_API_URL}api/conversation/find/${uid}/${onlineFriend}`
             );
+            if (res.data === null) {
+                const res = await axios.post(
+                    `${process.env.REACT_APP_API_URL}api/conversation/`,
+                    {
+                        senderId: uid,
+                        receiverId: onlineFriend,
+                    }
+                );
+            }
             setCurrentChat(res.data);
         } catch (err) {
             console.log(err);
