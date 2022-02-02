@@ -6,6 +6,7 @@ import Conversation from './../components/Conversation/Conversation';
 import Message from './../components/Message/Message';
 import { UidContext } from 'components/AppContext';
 import axios from 'axios';
+import { io } from 'socket.io-client';
 
 const Messenger = () => {
     const uid = useContext(UidContext);
@@ -13,7 +14,38 @@ const Messenger = () => {
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    const socket = useRef();
     const scrollRef = useRef();
+
+    useEffect(() => {
+        // @ts-ignore
+        socket.current = io('ws://localhost:8900');
+        // @ts-ignore
+        socket.current.on('getMessage', (data) => {
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: Date.now(),
+            });
+        });
+    }, []);
+
+    useEffect(() => {
+        arrivalMessage &&
+            currentChat?.members.includes(arrivalMessage.sender) &&
+            setMessages((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage, currentChat]);
+
+    useEffect(() => {
+        // @ts-ignore
+        socket.current.emit('addUser', uid);
+        // @ts-ignore
+        socket.current.on('getUsers', (users) => {
+            setOnlineUsers(users);
+        });
+    }, [uid]);
 
     useEffect(() => {
         const getConversations = async () => {
@@ -61,6 +93,15 @@ const Messenger = () => {
             text: newMessage,
             conversationId: currentChat._id,
         };
+
+        const receiverId = currentChat.members.find((member) => member !== uid);
+
+        // @ts-ignore
+        socket.current.emit('sendMessage', {
+            senderId: uid,
+            receiverId,
+            text: newMessage,
+        });
         try {
             const res = await axios.post(
                 `${process.env.REACT_APP_API_URL}api/message/`,
@@ -125,6 +166,8 @@ const Messenger = () => {
                                         onKeyDown={(e) =>
                                             handleSubmitOnEnter(e)
                                         }
+                                        required
+                                        minLength={1}
                                         value={newMessage}
                                     ></textarea>
                                     <button
@@ -145,11 +188,10 @@ const Messenger = () => {
                 </div>
                 <div className="chat-online">
                     <div className="chat-online-wrapper">
-                        <ChatOnline />
-                        <ChatOnline />
-                        <ChatOnline />
-                        <ChatOnline />
-                        <ChatOnline />
+                        <ChatOnline
+                            onlineUsers={onlineUsers}
+                            setCurrentChat={setCurrentChat}
+                        />
                     </div>
                 </div>
             </div>
