@@ -27,6 +27,7 @@ const ChatOnline = ({ onlineUsers, setCurrentChat }) => {
             const res = await axios.get(
                 `${process.env.REACT_APP_API_URL}api/conversation/find/${uid}/${onlineFriend}`
             );
+            setCurrentChat(res.data);
             if (res.data === null) {
                 const res = await axios.post(
                     `${process.env.REACT_APP_API_URL}api/conversation/`,
@@ -35,8 +36,8 @@ const ChatOnline = ({ onlineUsers, setCurrentChat }) => {
                         receiverId: onlineFriend,
                     }
                 );
+                setCurrentChat(res.data);
             }
-            setCurrentChat(res.data);
         } catch (err) {
             console.log(err);
         }

@@ -6,7 +6,7 @@ import Card from './Post/Card';
 
 const Thread = () => {
     const [loadPost, setLoadPost] = useState(true);
-    const [count, setCount] = useState(3);
+    const [count, setCount] = useState(5);
     const dispatch = useDispatch();
 
     // @ts-ignore

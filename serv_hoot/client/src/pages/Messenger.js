@@ -8,12 +8,19 @@ import { UidContext } from 'components/AppContext';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import { useSelector } from 'react-redux';
+import { isEmpty } from './../components/Utils';
+import SearchResultsHandler from './../components/Conversation/SearchResultsHandler';
+import { editComment } from 'actions/post.actions';
 
 const Messenger = () => {
     const uid = useContext(UidContext);
     // @ts-ignore
     const userData = useSelector((state) => state.userReducer);
+    // @ts-ignore
+    const usersData = useSelector((state) => state.usersReducer);
+    const [isSearching, setIsSearching] = useState(false);
     const [conversations, setConversations] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -45,14 +52,16 @@ const Messenger = () => {
         // @ts-ignore
         socket.current.emit('addUser', uid);
         // @ts-ignore
-        socket.current.on('getUsers', (usersOnline) => {
-            setOnlineUsers(
-                userData.following.filter((friend) =>
-                    usersOnline.some((user) => user.userId === friend)
-                )
-            );
+        socket.current.on('getUsers', (users) => {
+            if (!isEmpty(userData)) {
+                setOnlineUsers(
+                    userData.following.filter((f) =>
+                        users.some((u) => u.userId === f)
+                    )
+                );
+            }
         });
-    }, [uid]);
+    }, [userData]);
 
     useEffect(() => {
         const getConversations = async () => {
@@ -66,17 +75,19 @@ const Messenger = () => {
             }
         };
         getConversations();
-    }, [uid]);
+    }, [uid, userData]);
 
     useEffect(() => {
         const getMessages = async () => {
             try {
                 setMessages([]);
-                const res = await axios.get(
-                    `${process.env.REACT_APP_API_URL}api/message/` +
-                        currentChat?._id
-                );
-                setMessages(res.data);
+                if (currentChat !== null) {
+                    const res = await axios.get(
+                        `${process.env.REACT_APP_API_URL}api/message/` +
+                            currentChat._id
+                    );
+                    setMessages(res.data);
+                }
             } catch (err) {
                 console.log(err);
             }
@@ -128,6 +139,41 @@ const Messenger = () => {
         } else return;
     };
 
+    const handleSearch = async (e) => {
+        console.log(e.target.value);
+        if (
+            e.target.value === '' ||
+            e.target.value === ' ' ||
+            e.target.value === undefined ||
+            e.target.value === null
+        ) {
+            setIsSearching(false);
+            return;
+        } else {
+            setSearchResults([]);
+            setIsSearching(true);
+        }
+        // verifier qu'il existe ce pseudo dans usersData
+        if (!isEmpty(usersData[0])) {
+            usersData
+                .map((user) => {
+                    if (
+                        user.pseudo.startsWith(e.target.value) ||
+                        user.pseudo.includes(e.target.value) ||
+                        user.pseudo === e.target.value
+                    ) {
+                        if (!searchResults.includes(user._id)) {
+                            setSearchResults([...searchResults, user._id]);
+                        } else {
+                            return;
+                        }
+                    }
+                })
+                .join('');
+        }
+    };
+    console.log(searchResults);
+
     return (
         <div className="messenger">
             <LeftNav />
@@ -135,17 +181,42 @@ const Messenger = () => {
                 <div className="chat-menu">
                     <div className="chat-menu-wrapper">
                         <input
-                            placeholder="Search for friends"
+                            placeholder="Chercher un ami ..."
                             className="chat-menu-input"
+                            onChange={(e) => {
+                                setSearchResults([]);
+                                handleSearch(e);
+                            }}
                         />
-                        {conversations.map((conversation) => (
-                            <div
-                                onClick={() => setCurrentChat(conversation)}
-                                key={conversation._id}
-                            >
-                                <Conversation conversation={conversation} />
+                        <br />
+                        {isSearching ? (
+                            <div>
+                                <br />
+                                <h3> Résultat de recherche : </h3>
+                                {searchResults.map((result) => (
+                                    <div
+                                        onClick={(e) => {
+                                            console.log(result);
+                                        }}
+                                        key={result}
+                                    >
+                                        <SearchResultsHandler result={result} />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        ) : null}
+                        <br />
+                        <h3>Reprendre la conversation :</h3>
+                        {conversations.map((conversation) => {
+                            return (
+                                <div
+                                    onClick={() => setCurrentChat(conversation)}
+                                    key={conversation._id}
+                                >
+                                    <Conversation conversation={conversation} />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
                 <div className="chat-box">
@@ -159,6 +230,7 @@ const Messenger = () => {
                                                 message={message}
                                                 own={message.sender === uid}
                                                 messageSender={message.sender}
+                                                key={message._id}
                                             />
                                         </div>
                                     ))}
