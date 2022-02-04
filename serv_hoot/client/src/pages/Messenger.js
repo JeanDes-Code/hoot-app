@@ -10,7 +10,6 @@ import { io } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { isEmpty } from './../components/Utils';
 import SearchResultsHandler from './../components/Conversation/SearchResultsHandler';
-import { editComment } from 'actions/post.actions';
 
 const Messenger = () => {
     const uid = useContext(UidContext);
@@ -140,7 +139,7 @@ const Messenger = () => {
     };
 
     const handleSearch = async (e) => {
-        console.log(e.target.value);
+        setSearchResults([]);
         if (
             e.target.value === '' ||
             e.target.value === ' ' ||
@@ -150,26 +149,20 @@ const Messenger = () => {
             setIsSearching(false);
             return;
         } else {
-            setSearchResults([]);
             setIsSearching(true);
         }
-        // verifier qu'il existe ce pseudo dans usersData
         if (!isEmpty(usersData[0])) {
-            usersData
-                .map((user) => {
-                    if (
-                        user.pseudo.startsWith(e.target.value) ||
-                        user.pseudo.includes(e.target.value) ||
-                        user.pseudo === e.target.value
-                    ) {
-                        if (!searchResults.includes(user._id)) {
-                            setSearchResults([...searchResults, user._id]);
-                        } else {
-                            return;
-                        }
+            usersData.filter((user) => {
+                if (
+                    user.pseudo.startsWith(e.target.value) ||
+                    user.pseudo.includes(e.target.value) ||
+                    user.pseudo === e.target.value
+                ) {
+                    if (!searchResults.includes(user._id)) {
+                        setSearchResults([...searchResults, user._id]);
                     }
-                })
-                .join('');
+                }
+            });
         }
     };
     console.log(searchResults);
@@ -200,7 +193,10 @@ const Messenger = () => {
                                         }}
                                         key={result}
                                     >
-                                        <SearchResultsHandler result={result} />
+                                        <SearchResultsHandler
+                                            result={result}
+                                            setCurrentChat={setCurrentChat}
+                                        />
                                     </div>
                                 ))}
                             </div>
