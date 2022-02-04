@@ -154,9 +154,8 @@ const Messenger = () => {
         if (!isEmpty(usersData[0])) {
             usersData.filter((user) => {
                 if (
-                    user.pseudo.startsWith(e.target.value) ||
-                    user.pseudo.includes(e.target.value) ||
-                    user.pseudo === e.target.value
+                    user.pseudo.includes(e.target.value) &&
+                    user.pseudo !== userData.pseudo
                 ) {
                     if (!searchResults.includes(user._id)) {
                         setSearchResults([...searchResults, user._id]);
@@ -174,10 +173,9 @@ const Messenger = () => {
                 <div className="chat-menu">
                     <div className="chat-menu-wrapper">
                         <input
-                            placeholder="Chercher un ami ..."
+                            placeholder="Chercher un utilisateur ..."
                             className="chat-menu-input"
                             onChange={(e) => {
-                                setSearchResults([]);
                                 handleSearch(e);
                             }}
                         />
