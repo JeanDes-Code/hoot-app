@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import axios from 'axios';
 
 export const GET_USERS = 'GET_USERS';

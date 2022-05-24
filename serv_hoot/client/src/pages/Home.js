@@ -10,7 +10,6 @@ import ScrollTop from 'react-scrolltop-button';
 
 const Home = () => {
     const uid = useContext(UidContext);
-
     return (
         <div className="home">
             <LeftNav />
@@ -25,7 +24,7 @@ const Home = () => {
                 <Thread />
                 <ScrollTop
                     text="Haut de page"
-                    distance={50}
+                    distance={100}
                     breakpoint={3000}
                     style={{
                         backgroundColor: '#ff7b77',
@@ -33,7 +32,7 @@ const Home = () => {
                         border: 'none',
                     }}
                     className="scroll-your-role"
-                    speed={1000}
+                    speed={500}
                     target={75}
                 />
             </div>
