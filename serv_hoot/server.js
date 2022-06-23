@@ -2,6 +2,9 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
+const conversationRoutes = require('./routes/conversation.routes')
+const messageRoutes = require('./routes/message.routes')
+
 //DOTENV CONFIG
 require('dotenv').config({ path: './config/.env' });
 const ENV = process.env;
@@ -39,6 +42,8 @@ app.get('/jwtid', requireAuth, (req, res) => {
 //Routes
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/conversation', conversationRoutes);
+app.use('/api/message', messageRoutes);
 
 //Server
 app.listen(ENV.PORT, () => {

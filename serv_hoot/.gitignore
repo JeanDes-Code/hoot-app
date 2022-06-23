@@ -1,3 +1,5 @@
 /config/.env
 /node_modules
 /socket/node_modules
+/client/public/uploads/profil
+/client/public/uploads/posts

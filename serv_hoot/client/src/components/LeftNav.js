@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { UidContext } from './AppContext';
 
 const LeftNav = () => {
     const uid = useContext(UidContext);
-
+    const [msgNotif, setMsgNotif] = useState(false);
+    console.log(setMsgNotif);
     return (
         <div className="left-nav-container">
             <div className="icons">
@@ -24,6 +25,26 @@ const LeftNav = () => {
                         />
                     </NavLink>
                     <br />
+                    {uid ? (
+                        <>
+                            <NavLink
+                                to="/messenger"
+                                exact
+                                activeClassName="active-left-nav"
+                                className="messenger-nav"
+                            >
+                                <img
+                                    src="./img/icons/messenger.svg"
+                                    alt="to-messenger-page"
+                                />
+                                {msgNotif ? (
+                                    <div className="new-message-badge"></div>
+                                ) : null}
+                                <br />
+                            </NavLink>
+                        </>
+                    ) : null}
+
                     <NavLink
                         to="/profil"
                         exact

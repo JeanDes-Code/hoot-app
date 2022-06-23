@@ -83,4 +83,17 @@
             }
         }
     }
+
+    .messenger-nav {
+        position: relative;
+    }
+    .new-message-badge {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: $color-1;
+        position: absolute;
+        top: 23px;
+        right: 0px;
+    }
 }
